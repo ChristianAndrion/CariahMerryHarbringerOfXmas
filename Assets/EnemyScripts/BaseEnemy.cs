@@ -6,7 +6,7 @@ public class BaseEnemy : MonoBehaviour
     
     //THIS IS AN EDIT
     
-    //This is a better edit
+    //This is Herman's Edit
 
     void Start()
     {
