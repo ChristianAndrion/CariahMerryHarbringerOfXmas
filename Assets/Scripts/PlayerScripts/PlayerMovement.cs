@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,11 +18,14 @@ public class PlayerMovement : MonoBehaviour
 
     //Private Movement Variables
     private float moveSpeed = 0.0f;
-    private float jumpForce = 10.0f;
+    [SerializeField] private float jumpForce = 5.0f;
 
     public bool groundCheck = false;
     private bool wallCheck;
     private bool canJump;
+
+    [SerializeField] private float _sprintMultiplier = 3.0f;
+    bool _isSprinting = false;
 
     private bool canDash;
     private float dashCooldown;
@@ -29,19 +34,17 @@ public class PlayerMovement : MonoBehaviour
     private float coyoteTime;
     private float wallSlideSpeed;
 
+    [SerializeField] private float _friction = 0;
+
     private float gravity = -9.8f;
+
+    Vector2 _inputVector;
 
     void Awake()
     {
         //Gather components 
         tf = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -51,6 +54,19 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForceY(gravity);
         }
+
+        if (!(_inputVector == Vector2.zero)) {
+            float inputForce = _inputVector.x * 100;
+            inputForce = _isSprinting ? inputForce * _sprintMultiplier : inputForce;
+            rb.AddForce(new Vector2(inputForce, 0), ForceMode2D.Force);
+        } else if (Mathf.Abs(rb.linearVelocityX) > 1) {
+            rb.AddForce(new Vector2(-1 * Mathf.Sign(rb.linearVelocityX) * _friction, 0), ForceMode2D.Force);
+        } else {
+            rb.linearVelocityX = 0;
+        }
+
+        if (Mathf.Abs(rb.linearVelocityX) > maxSpeed)
+            rb.linearVelocityX = maxSpeed * Mathf.Sign(rb.linearVelocityX);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -69,5 +85,24 @@ public class PlayerMovement : MonoBehaviour
             groundCheck = false;
         }
 
+    }
+
+    public void OnMove(InputValue inputValue)
+    {
+        _inputVector = inputValue.Get<Vector2>();
+    }
+
+    public void OnJump()
+    {
+        if (groundCheck)
+        {
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+    }
+
+    public void OnSprint(InputValue value)
+    {
+        float boolVal = value.Get<float>();
+        _isSprinting = boolVal == 1 ? true : false;
     }
 }
