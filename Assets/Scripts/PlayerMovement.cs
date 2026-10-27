@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
     //TODO: public Elf currElf;
 
     //Private Movement Variables
-    private float moveSpeed = 0.0f;
+    [SerializeField] private float moveSpeed;
+    private float hInput; // Holds input for horizontal movement.
+    private Vector2 moveVelocity;
     private float jumpForce = 10.0f;
 
     public bool groundCheck = false;
@@ -51,6 +53,17 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForceY(gravity);
         }
+
+        Vector2 playerPos = new Vector2(tf.position.x, tf.position.y);
+        rb.MovePosition(playerPos + moveVelocity * Time.deltaTime);
+    }
+
+    public void HorizontalMove(InputAction.CallbackContext horizontalInput)
+    {
+        hInput = horizontalInput.ReadValue<Vector2>().x * moveSpeed; // Returns negative if left, positive if right.
+        
+        moveVelocity.x = hInput;
+        //Debug.Log("hInput = " + hInput);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -59,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
         {
             groundCheck = true;
         }
-
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -68,6 +80,5 @@ public class PlayerMovement : MonoBehaviour
         {
             groundCheck = false;
         }
-
     }
 }
