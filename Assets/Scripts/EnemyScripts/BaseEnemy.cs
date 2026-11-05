@@ -4,13 +4,13 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
     [Header("Enemy Stat Variables")]
-    [SerializeField] private float HP = 100f;
-    [SerializeField] private float moveSpeed = 5f;
-    private Rigidbody2D rb; // Holds the object rigidbody.
-    private Collider2D col; // Holds the object 2D collider. 
-    private Transform tf2; // Holds the object Transform.
+    [SerializeField] protected float HP = 100f;
+    [SerializeField] protected float moveSpeed = 5f;
+    protected Rigidbody2D rb; // Holds the object rigidbody.
+    protected Collider2D col; // Holds the object 2D collider. 
+    protected Transform tf2; // Holds the object Transform.
 
-    void Awake()
+    protected virtual void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         col = gameObject.GetComponent<Collider2D>();
