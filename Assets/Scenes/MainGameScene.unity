@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 298975624}
   - component: {fileID: 298975626}
   - component: {fileID: 298975625}
-  - component: {fileID: 298975627}
   - component: {fileID: 298975628}
   m_Layer: 6
   m_Name: Imp
@@ -320,20 +319,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &298975627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298975621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a88e2c2d14627904fb0da9cf6e883483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BaseEnemy
-  HP: 100
-  moveSpeed: 5
 --- !u!114 &298975628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9911c2292ad06c74eb8029156607f340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChase
+  HP: 100
+  moveSpeed: 5
   player: {fileID: 964276772}
   speed: 5
 --- !u!1 &564618017
@@ -639,7 +626,7 @@ GameObject:
   - component: {fileID: 964276778}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -858,7 +845,6 @@ GameObject:
   - component: {fileID: 1911885972}
   - component: {fileID: 1911885971}
   - component: {fileID: 1911885974}
-  - component: {fileID: 1911885969}
   m_Layer: 6
   m_Name: archer
   m_TagString: Untagged
@@ -881,20 +867,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 76999880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1911885969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911885967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9911c2292ad06c74eb8029156607f340, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyChase
-  player: {fileID: 964276772}
-  speed: 5
 --- !u!61 &1911885971
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1041,7 +1013,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyArcher
   HP: 100
   moveSpeed: 5
-  range: 0
+  player: {fileID: 964276772}
+  speed: 3
+  range: 3
+  inRange: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
